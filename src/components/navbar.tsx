@@ -36,6 +36,7 @@ const Navbar = () => {
                     <SignedIn>
                         <UserButton />
                         {/* <SignOutButton /> */}
+                        <Link href="/user-profile">Profile</Link>
                     </SignedIn>
 
                 </div>
