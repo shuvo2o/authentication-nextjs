@@ -1,10 +1,14 @@
 "use client";
 
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useState } from "react";
 
 const Navbar = () => {
+    const {user, isLoaded, isSignedIn} = useUser();
+    const role = user?.publicMetadata?.role;
+    console.log(role);
+
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const handleAuth = () => {
@@ -27,6 +31,17 @@ const Navbar = () => {
                     <li><Link href="/services" className="text-black  hover:text-blue-600">Services</Link></li>
                     <li><Link href="/contact" className="text-black  hover:text-blue-600">Contact</Link></li>
                 </ul>
+                <div className="text-blue-500">
+                    {
+                        isSignedIn ? (isSignedIn ? (
+                            <>
+                            {role === "user" && (<Link href="user-dashboard"> User dashboard</Link>)}
+                            {role === "admin" && (<Link href="admin-dashboard"> Admin dashboard</Link>)}
+                            {role === "educator" && (<Link href="educator-dashboard"> Educator dashboard</Link>)}
+                            </>
+                        ):<p>Hello</p>) : <>Register</>
+                    }
+                </div>
 
                 {/* Right Side — Login / Logout */}
                 <div className="flex items-center text-black space-x-2">
