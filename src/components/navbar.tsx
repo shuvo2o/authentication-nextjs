@@ -1,11 +1,11 @@
 "use client";
 
-import { SignedIn, SignedOut, SignInButton, SignOutButton, UserButton, useUser } from "@clerk/nextjs";
+import { SignedIn, SignedOut, SignInButton, SignOutButton, SignUpButton, UserButton, useUser } from "@clerk/nextjs";
 import Link from "next/link";
 import { useState } from "react";
 
 const Navbar = () => {
-    const {user, isLoaded, isSignedIn} = useUser();
+    const { user, isLoaded, isSignedIn } = useUser();
     const role = user?.publicMetadata?.role;
     console.log(role);
 
@@ -35,18 +35,23 @@ const Navbar = () => {
                     {
                         isSignedIn ? (isSignedIn ? (
                             <>
-                            {role === "user" && (<Link href="user-dashboard"> User dashboard</Link>)}
-                            {role === "admin" && (<Link href="admin-dashboard"> Admin dashboard</Link>)}
-                            {role === "educator" && (<Link href="educator-dashboard"> Educator dashboard</Link>)}
+                                {role === "user" && (<Link href="user-dashboard"> User dashboard</Link>)}
+                                {role === "admin" && (<Link href="admin-dashboard"> Admin dashboard</Link>)}
+                                {role === "educator" && (<Link href="educator-dashboard"> Educator dashboard</Link>)}
                             </>
-                        ):<p>Hello</p>) : <>Register</>
+                        ) : <p>Hello</p>) : <>Register</>
                     }
                 </div>
 
                 {/* Right Side — Login / Logout */}
                 <div className="flex items-center text-black space-x-2">
                     <SignedOut>
-                        <SignInButton mode="modal" />
+                        <SignInButton>
+                            <button className="bg-blue-500 px-4 py-2 rounded cursor-pointer text-white hover:bg-blue-700">Login</button>
+                        </SignInButton>
+                        <SignUpButton>
+                            <button className="bg-green-500 px-4 py-2 rounded cursor-pointer text-white hover:bg-green-700">Register</button>
+                        </SignUpButton>
                     </SignedOut>
                     <SignedIn>
                         <UserButton />
